@@ -1,0 +1,109 @@
+package net.kerfuffle.Utilities.Network;
+
+import java.io.IOException;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.util.ArrayList;
+
+import static net.kerfuffle.Utilities.Network.Packet.*;
+
+public class Client implements Runnable{
+
+	private Thread t;
+	private String threadName;
+	private MyCode myCode;
+	
+	private DatagramSocket socket;
+	private InetAddress ip;
+	private int port;
+	private boolean running = false;
+	
+	private ArrayList <User> users = new ArrayList <User>();
+	
+	public Client(String threadName, InetAddress ip, int port) throws SocketException
+	{
+		this.threadName=threadName;
+		this.ip = ip;
+		this.port=port;
+		socket = new DatagramSocket();
+	}
+	public void start()
+	{
+		running = true;
+		t = new Thread(this, threadName);
+		t.start();
+	}
+	
+	public void setMyCode(MyCode myCode)
+	{
+		this.myCode = myCode;
+	}
+	
+	public void close()
+	{
+		running = false;
+	}
+	
+	public void run()
+	{
+		Packet incoming = null;
+		while (isRunning())
+		{
+			try 
+			{
+				incoming = receivePacket(socket);
+				myCode.run(incoming);
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	public boolean isRunning()
+	{
+		return running;
+	}
+	
+	public void addUser(User u)
+	{
+		users.add(u);
+	}
+	public void removeUser(User u)
+	{
+		users.remove(u);
+	}
+	public void removeUser(int i)
+	{
+		users.remove(i);
+	}
+	public void removeUser(String username)
+	{
+		for (User u : users)
+		{
+			if (u.getUsername().equals(username))
+			{
+				users.remove(u);
+				return;
+			}
+		}
+	}
+	
+	public InetAddress getIp()
+	{
+		return ip;
+	}
+	public int getPort()
+	{
+		return port;
+	}
+	
+	public void sendPacket(Packet p) throws IOException
+	{
+		Packet.sendPacket(p, socket, ip, port);
+	}
+	
+}
