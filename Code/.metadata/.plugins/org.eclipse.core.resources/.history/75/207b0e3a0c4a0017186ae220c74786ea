@@ -1,0 +1,25 @@
+package net.kerfuffle.multiplayer_world;
+
+import org.lwjgl.glfw.GLFW;
+
+import net.kerfuffle.Utilities.GUI.Quad;
+import net.kerfuffle.Utilities.GUI.RGB;
+
+public class Player extends Entity{
+	
+	private String username;
+	private int UP = GLFW.GLFW_KEY_W, DOWN = GLFW.GLFW_KEY_S, LEFT = GLFW.GLFW_KEY_A, RIGHT = GLFW.GLFW_KEY_D;
+	
+	public Player(String username, float x, float y, float w, float h)
+	{
+		super(new Quad(x,y,w,h, new RGB(1,1,1)), Global.PLAYER_SPEED);
+	}
+	
+	
+	
+	public void update()
+	{
+		box.draw();
+	}
+
+}

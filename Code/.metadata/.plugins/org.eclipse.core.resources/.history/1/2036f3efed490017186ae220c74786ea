@@ -1,0 +1,38 @@
+package net.kerfuffle.multiplayer_world;
+
+public class PlayerMP extends Entity{
+
+	private String username;
+	
+	public PlayerMP(String username, float x, float y, float w, float h)
+	{
+		super(new Quad(x,y,w,h, new RGB(1,1,1)), Global.PLAYER_SPEED);
+		this.username = username;
+	}
+	
+	
+	public String getUsername()
+	{
+		return username;
+	}
+	
+	public void move(int direction)
+	{
+		if (direction == Global.UP)
+		{
+			
+		}
+		if (direction == Global.DOWN)
+		{
+			
+		}
+		if (direction == Global.LEFT)
+		{
+			
+		}
+		if (direction == Global.RIGHT)
+		{
+			
+		}
+	}
+}

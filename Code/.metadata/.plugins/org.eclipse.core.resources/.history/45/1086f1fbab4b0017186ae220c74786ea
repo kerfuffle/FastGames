@@ -1,0 +1,18 @@
+package net.kerfuffle.multiplayer_world;
+
+import java.net.InetAddress;
+
+import net.kerfuffle.Utilities.Network.User;
+
+public class SPlayer extends User{
+
+	//current do not use anything besides username, but this would be a good place to store preferences for each player
+	
+	public SPlayer(String username, InetAddress ip, int port)
+	{
+		super(username, ip, port);
+		
+		
+	}
+	
+}

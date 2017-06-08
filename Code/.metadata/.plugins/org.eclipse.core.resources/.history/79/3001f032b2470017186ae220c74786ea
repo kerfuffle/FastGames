@@ -1,0 +1,17 @@
+package net.kerfuffle.multiplayer_world;
+
+public class PlayerMP {
+
+	private String username;
+	
+	public PlayerMP(String username)
+	{
+		this.username = username;
+	}
+	
+	
+	public String getUsername()
+	{
+		return username;
+	}
+}

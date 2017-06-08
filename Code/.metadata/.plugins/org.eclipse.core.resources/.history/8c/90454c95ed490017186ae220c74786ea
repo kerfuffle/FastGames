@@ -1,0 +1,34 @@
+package net.kerfuffle.multiplayer_world;
+
+import net.kerfuffle.Utilities.GUI.Quad;
+
+public class Entity {
+
+	private String name;
+	private float speed;
+	private Quad box;
+	
+	public Entity(Quad box, float speed)
+	{
+		this.box=box;
+		this.speed = speed;
+	}
+	
+	public void moveLeft()
+	{
+		
+	}
+	public void moveRight()
+	{
+		
+	}
+	public void moveUp()
+	{
+		
+	}
+	public void moveDown()
+	{
+		
+	}
+	
+}

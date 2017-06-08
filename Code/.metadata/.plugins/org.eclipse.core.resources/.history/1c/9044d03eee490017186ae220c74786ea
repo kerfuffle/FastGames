@@ -1,0 +1,28 @@
+package net.kerfuffle.multiplayer_world.Packets;
+
+import net.kerfuffle.Utilities.Network.Packet;
+import net.kerfuffle.multiplayer_world.Global;
+
+public class PacketLogin extends Packet{
+
+	private String username;
+	
+	public PacketLogin(String username)
+	{
+		super(null, Global.LOGIN);
+		data = id + "," + username + ",";
+	}
+	
+	public PacketLogin (CharSequence data)
+	{
+		super(data, Global.LOGIN);
+		String sp[] = data.toString().split(",");
+		username = sp[1];
+	}
+	
+	public String getUsername()
+	{
+		return username;
+	}
+	
+}

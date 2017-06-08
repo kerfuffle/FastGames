@@ -1,0 +1,73 @@
+package net.kerfuffle.multiplayer_world;
+
+import java.net.SocketException;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
+import net.kerfuffle.Utilities.Network.MyNetworkCode;
+import net.kerfuffle.Utilities.Network.Packet;
+import net.kerfuffle.Utilities.Network.Server;
+import net.kerfuffle.multiplayer_world.Packets.PacketLogin;
+
+public class Main {
+
+	private SendThread st;
+	private Server server;
+	
+	private ArrayList<SPlayer> players = new ArrayList<SPlayer>();
+
+	public void run() throws SocketException
+	{
+		int port = Integer.parseInt(JOptionPane.showInputDialog("Port."));
+
+		server = new Server("MultiplayerServer", port);
+		st = new SendThread(server);
+
+		server.setMyNetworkCode(new MyNetworkCode()
+		{
+			public void run(Packet packet)
+			{
+				if (packet.getId() == Global.LOGIN)
+				{
+					PacketLogin p = new PacketLogin(packet.getData());
+					
+				}
+				if (packet.getId() == Global.MESSAGE)
+				{
+					
+				}
+				if (packet.getId() == Global.MOVE)
+				{
+					
+				}
+				if (packet.getId() == Global.DISCONNECT)
+				{
+					
+				}
+			}
+		});
+
+		st.start();
+		server.start();
+	}
+	
+	private boolean validUsername(String username)
+	{
+		for (SPlayer sp : players)
+		{
+			if (sp.getUsername().equals(username))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+
+	public static void main(String args[])
+	{
+
+	}
+
+}

@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.Client"/>
-<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
-<fullyQualifiedTypeName name="java.net.InetAddress"/>
-<fullyQualifiedTypeName name="net.kerfuffle.Utilities.GUI.DavisGUI"/>
 <fullyQualifiedTypeName name="net.kerfuffle.Utilities.GUI.Player"/>
+<fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.MyCode"/>
+<fullyQualifiedTypeName name="net.kerfuffle.Utilities.GUI.DavisGUI"/>
+<fullyQualifiedTypeName name="java.io.FileInputStream"/>
+<fullyQualifiedTypeName name="net.kerfuffle.Utilities.GUI.Quad"/>
+<fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.Client"/>
+<fullyQualifiedTypeName name="net.kerfuffle.Utilities.MyCode"/>
 <fullyQualifiedTypeName name="net.kerfuffle.Utilities.GUI.RGB"/>
 <fullyQualifiedTypeName name="org.lwjgl.glfw.GLFW"/>
-<fullyQualifiedTypeName name="net.kerfuffle.Utilities.GUI.Quad"/>
+<fullyQualifiedTypeName name="net.kerfuffle.Utilities.GUI.Text.Font"/>
+<fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.Server"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+<fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.MyNetworkCode"/>
+<fullyQualifiedTypeName name="java.net.InetAddress"/>
+<fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketLogin"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketError"/>
+<fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketCurrentConfig"/>
 <fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.Packet"/>
-<fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.MyCode"/>
+<fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Global"/>
+<fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketMove"/>
+<fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.User"/>
+<fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketMessage"/>
 </qualifiedTypeNameHistroy>

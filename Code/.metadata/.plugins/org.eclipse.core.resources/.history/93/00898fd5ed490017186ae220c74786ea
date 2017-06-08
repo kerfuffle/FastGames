@@ -1,0 +1,37 @@
+package net.kerfuffle.multiplayer_world;
+
+public class PlayerMP {
+
+	private String username;
+	
+	public PlayerMP(String username)
+	{
+		this.username = username;
+	}
+	
+	
+	public String getUsername()
+	{
+		return username;
+	}
+	
+	public void move(int direction)
+	{
+		if (direction == Global.UP)
+		{
+			
+		}
+		if (direction == Global.DOWN)
+		{
+			
+		}
+		if (direction == Global.LEFT)
+		{
+			
+		}
+		if (direction == Global.RIGHT)
+		{
+			
+		}
+	}
+}

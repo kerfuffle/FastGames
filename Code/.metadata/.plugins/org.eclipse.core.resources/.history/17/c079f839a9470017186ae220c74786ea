@@ -1,0 +1,5 @@
+package net.kerfuffle.multiplayer_world.Packets;
+
+public class PacketLeft {
+
+}

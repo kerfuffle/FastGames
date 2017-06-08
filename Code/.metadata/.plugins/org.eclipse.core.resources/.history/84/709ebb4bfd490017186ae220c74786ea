@@ -1,0 +1,33 @@
+package net.kerfuffle.multiplayer_world;
+
+import net.kerfuffle.Utilities.Network.Client;
+
+public class SendThread implements Runnable{
+	
+	private Thread t;
+	private volatile boolean running = false;
+	
+	private Client client;
+	
+	public SendThread(Client client)
+	{
+		this.client = client;
+	}
+	
+	
+	public void start()
+	{
+		
+	}
+	
+	public void run()
+	{
+		
+	}
+	
+	public void sendPacket()
+	{
+		
+	}
+
+}
