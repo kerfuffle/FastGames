@@ -5,11 +5,11 @@ import net.kerfuffle.multiplayer_world.Global;
 
 public class PacketError extends Packet{
 
-	public PacketError(String message)
+	public PacketError(int type, String message)
 	{
 		super(null, Global.ERROR);
 		
-		data = id + "," + message + ",";
+		data = id + "," + type + "," + message + ",";
 	}
 	
 }

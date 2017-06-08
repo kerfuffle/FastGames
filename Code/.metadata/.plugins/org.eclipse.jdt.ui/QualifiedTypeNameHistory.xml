@@ -20,7 +20,7 @@
 <fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketCurrentConfig"/>
 <fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.Packet"/>
 <fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Global"/>
-<fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketMove"/>
 <fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.User"/>
 <fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketMessage"/>
+<fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketMove"/>
 </qualifiedTypeNameHistroy>

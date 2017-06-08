@@ -38,6 +38,9 @@ public class SendThread implements Runnable{
 			{
 				try
 				{
+					Packet packet = this.packet;
+					InetAddress ip = this.ip;
+					int port = this.port;
 					server.sendToUser(packet, ip, port);
 				}
 				catch (IOException e) 
@@ -51,6 +54,9 @@ public class SendThread implements Runnable{
 			{
 				try
 				{
+					Packet packet = this.packet;
+					InetAddress ip = this.ip;
+					int port = this.port;
 					server.sendToAllUsersExcept(packet, ip, port);
 				}
 				catch (IOException e) 

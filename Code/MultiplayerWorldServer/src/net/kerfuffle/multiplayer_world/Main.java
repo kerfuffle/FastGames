@@ -28,6 +28,7 @@ public class Main {
 
 		server = new Server("MultiplayerServer", port);
 		st = new SendThread(server);
+		st.start();
 
 		server.setMyNetworkCode(new MyNetworkCode()
 		{
@@ -35,7 +36,6 @@ public class Main {
 			{
 				if (packet.getId() == Global.LOGIN)
 				{
-					System.out.println(packet.getIp());
 					PacketLogin p = new PacketLogin(packet.getData());
 					if (validUsername(p.getUsername()))
 					{
@@ -46,8 +46,8 @@ public class Main {
 							st.sendPacket(oldy, packet.getIp(), packet.getPort());
 						}
 						
-						float x = (float) (Math.random()*1000);
-						float y = (float) (Math.random()*700);
+						float x = 0;//(float) (Math.random()*1000);
+						float y = 0;//(float) (Math.random()*700);
 						float w = 50;
 						float h = 50;
 						
@@ -56,14 +56,15 @@ public class Main {
 						
 						PacketCurrentConfig pcc = new PacketCurrentConfig(x,y,w,h);
 						st.sendPacket(pcc, packet.getIp(), packet.getPort());
+						//st.sendPacket(pcc, packet.getIp(), packet.getPort());
 						
 						PacketLogin pl = new PacketLogin(p.getUsername(), x, y,w,h);
 						st.sendToAllExcept(pl, packet.getIp(), packet.getPort());
 					}
 					else
 					{
-						PacketError err = new PacketError("Username is already taken.");
-						st.sendPacket(err, p.getIp(), p.getPort());
+						PacketError err = new PacketError(Global.LOGIN_ERROR, "Username is already taken.");
+						st.sendPacket(err, packet.getIp(), packet.getPort());
 					}
 				}
 				if (packet.getId() == Global.MESSAGE)
@@ -75,7 +76,15 @@ public class Main {
 				if (packet.getId() == Global.MOVE)
 				{
 					PacketMove p = new PacketMove(packet.getData());
-					st.sendToAllExcept(p, packet.getIp(), packet.getPort());
+					PacketMove pm = new PacketMove(server.getUsername(packet.getIp(), packet.getPort()), p.getDirection());
+					
+					st.sendToAllExcept(pm, packet.getIp(), packet.getPort());
+					
+					for (SPlayer sp : players)
+					{
+						System.out.println(sp.getUsername());
+					}
+					System.out.println();
 				}
 				if (packet.getId() == Global.DISCONNECT)
 				{
@@ -84,7 +93,6 @@ public class Main {
 			}
 		});
 
-		st.start();
 		server.start();
 	}
 	
