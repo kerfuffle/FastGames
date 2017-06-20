@@ -1,9 +1,0 @@
-package net.kerfuffle.multiplayer_world.Packets;
-
-import net.kerfuffle.Utilities.Network.Packet;
-
-public class PacketCurrentConfig extends Packet{
-
-	public PacketCurrentConfig()
-	
-}

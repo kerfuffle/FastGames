@@ -1,0 +1,90 @@
+package net.kerfuffle.multiplayer_world;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.util.ArrayList;
+
+import net.kerfuffle.Utilities.Network.Server;
+import net.kerfuffle.Utilities.Network.Packet;
+
+
+public class SendThread implements Runnable{
+	
+	private Thread t;
+	private volatile boolean running = false;
+	
+	private ArrayList<Packet> packetBuffer = new ArrayList<Packet>();
+	
+	private Server server;
+	private Packet packet;
+	private InetAddress ip;
+	private int port;
+	private boolean send = false, toAllExcept = false;
+	
+	public SendThread(Server server)
+	{
+		this.server = server;
+	}
+	
+	
+	public void start()
+	{
+		running = true;
+		t = new Thread(this, "MultiplayerSend");
+		t.start();
+	}
+	
+	public void run()
+	{
+		while (running)
+		{
+			if (send)
+			{
+				try
+				{
+					server.sendToUser(packetBuffer.get(0), packetBuffer.get(0).getIp(), packetBuffer.get(0).getPort());
+					packetBuffer.remove(0);
+				}
+				catch (IOException e) 
+				{
+					e.printStackTrace();
+				}
+				send = false;
+				toAllExcept = false;
+			}
+			
+			if (toAllExcept)
+			{
+				try
+				{	
+					server.sendToAllUsersExcept(packetBuffer.get(0), packetBuffer.get(0).getIp(), packetBuffer.get(0).getPort());
+					packetBuffer.remove(0);
+				}
+				catch (IOException e) 
+				{
+					e.printStackTrace();
+				}
+				toAllExcept = false;
+				send = false;
+			}
+		}
+	}
+	
+	public void close()
+	{
+		running = false;
+	}
+	
+	public void sendToAllExcept(Packet p, InetAddress ip, int port)
+	{
+		packetBuffer.add(new Packet(p.getData(), ip, port));
+		toAllExcept = true;
+	}
+	
+	public void sendPacket(Packet p, InetAddress ip, int port)
+	{
+		packetBuffer.add(new Packet(p.getData(), ip, port));
+		send = true;
+	}
+
+}

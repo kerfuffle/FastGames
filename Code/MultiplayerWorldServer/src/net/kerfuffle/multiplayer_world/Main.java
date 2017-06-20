@@ -9,6 +9,7 @@ import net.kerfuffle.Utilities.Network.MyNetworkCode;
 import net.kerfuffle.Utilities.Network.Packet;
 import net.kerfuffle.Utilities.Network.Server;
 import net.kerfuffle.Utilities.Network.User;
+import net.kerfuffle.multiplayer_world.Packets.PacketCoord;
 import net.kerfuffle.multiplayer_world.Packets.PacketCurrentConfig;
 import net.kerfuffle.multiplayer_world.Packets.PacketError;
 import net.kerfuffle.multiplayer_world.Packets.PacketLogin;
@@ -39,6 +40,14 @@ public class Main {
 					PacketLogin p = new PacketLogin(packet.getData());
 					if (validUsername(p.getUsername()))
 					{
+						float x = 0;//(float) (Math.random()*1000);
+						float y = 0;//(float) (Math.random()*700);
+						float w = (float) (Math.random()*200);
+						float h = (float) (Math.random()*200);
+						
+						PacketLogin pl = new PacketLogin(p.getUsername(), x, y,w,h);
+						st.sendPacket(pl, packet.getIp(), packet.getPort());
+						st.sendToAllExcept(pl, packet.getIp(), packet.getPort());
 						
 						for (SPlayer sp : players)
 						{
@@ -46,20 +55,16 @@ public class Main {
 							st.sendPacket(oldy, packet.getIp(), packet.getPort());
 						}
 						
-						float x = 0;//(float) (Math.random()*1000);
-						float y = 0;//(float) (Math.random()*700);
-						float w = 50;
-						float h = 50;
+						
 						
 						server.addUser(new User(p.getUsername(), packet.getIp(), packet.getPort()));
 						players.add(new SPlayer(p.getUsername(), packet.getIp(), packet.getPort(), x, y, w, h));
 						
-						PacketCurrentConfig pcc = new PacketCurrentConfig(x,y,w,h);
-						st.sendPacket(pcc, packet.getIp(), packet.getPort());
+//						PacketCurrentConfig pcc = new PacketCurrentConfig(x,y,w,h);
+//						st.sendPacket(pcc, packet.getIp(), packet.getPort());
 						//st.sendPacket(pcc, packet.getIp(), packet.getPort());
 						
-						PacketLogin pl = new PacketLogin(p.getUsername(), x, y,w,h);
-						st.sendToAllExcept(pl, packet.getIp(), packet.getPort());
+						
 					}
 					else
 					{
@@ -73,6 +78,13 @@ public class Main {
 					PacketMessage pm = new PacketMessage(server.getUsername(packet.getIp(), packet.getPort()), p.getMessage());
 					st.sendToAllExcept(pm, packet.getIp(), packet.getPort());
 				}
+				if (packet.getId() == Global.COORD)
+				{
+					PacketCoord p = new PacketCoord(packet.getData());
+					PacketCoord pc = new PacketCoord(server.getUsername(packet.getIp(), packet.getPort()), p.getX(), p.getY());
+					
+					st.sendToAllExcept(pc, packet.getIp(), packet.getPort());
+				}
 				if (packet.getId() == Global.MOVE)
 				{
 					PacketMove p = new PacketMove(packet.getData());
@@ -80,11 +92,11 @@ public class Main {
 					
 					st.sendToAllExcept(pm, packet.getIp(), packet.getPort());
 					
-					for (SPlayer sp : players)
-					{
-						System.out.println(sp.getUsername());
-					}
-					System.out.println();
+//					for (SPlayer sp : players)
+//					{
+//						System.out.println(sp.getUsername());
+//					}
+//					System.out.println();
 				}
 				if (packet.getId() == Global.DISCONNECT)
 				{

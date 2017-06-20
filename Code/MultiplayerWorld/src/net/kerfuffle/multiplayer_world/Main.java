@@ -10,6 +10,7 @@ import net.kerfuffle.Utilities.MyCode;
 import net.kerfuffle.Utilities.Network.Client;
 import net.kerfuffle.Utilities.Network.MyNetworkCode;
 import net.kerfuffle.Utilities.Network.Packet;
+import net.kerfuffle.multiplayer_world.Packets.PacketCoord;
 import net.kerfuffle.multiplayer_world.Packets.PacketCurrentConfig;
 import net.kerfuffle.multiplayer_world.Packets.PacketError;
 import net.kerfuffle.multiplayer_world.Packets.PacketLogin;
@@ -58,7 +59,15 @@ public class Main {
 				if (packet.getId() == Global.LOGIN)
 				{
 					PacketLogin p = new PacketLogin(packet.getData());
-					game.addPlayer(p.getUsername(), p.getX(), p.getY(), p.getW(), p.getH());
+					if (p.getUsername().equals(username))
+					{
+						game.setLocalPlayer(username, p.getX(), p.getY(), p.getW(), p.getH());	
+					}
+					else
+					{
+						game.addPlayer(p.getUsername(), p.getX(), p.getY(), p.getW(), p.getH());
+					}
+					
 				}
 				if (packet.getId() == Global.MOVE)
 				{
@@ -70,10 +79,17 @@ public class Main {
 					PacketMessage p = new PacketMessage(packet.getData());
 					game.showMessage(p.getUsername() + ": " + p.getMessage());
 				}
-				if (packet.getId() == Global.CURRENT_CONFIG)
+//				if (packet.getId() == Global.CURRENT_CONFIG)
+//				{
+//					System.out.println("received current config");
+//					PacketCurrentConfig p = new PacketCurrentConfig(packet.getData());
+//								
+//				}
+				if (packet.getId() == Global.COORD)
 				{
-					PacketCurrentConfig p = new PacketCurrentConfig(packet.getData());
-					game.setLocalPlayer(username, p.getX(), p.getY(), p.getW(), p.getH());				
+					PacketCoord p = new PacketCoord(packet.getData());
+					System.out.format("%s: %f, %f\n", p.getUsername(), p.getX(), p.getY());
+					game.setPlayerPos(p.getUsername(), p.getX(), p.getY());
 				}
 				if (packet.getId() == Global.ERROR)
 				{

@@ -1,0 +1,10 @@
+package net.kerfuffle.multiplayer_world.Packets;
+
+public class PacketCoord {
+
+	public PacketCoord(String username, float x, float y)
+	{
+		super(data, Global.)
+	}
+	
+}

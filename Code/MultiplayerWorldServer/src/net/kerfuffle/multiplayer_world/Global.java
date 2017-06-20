@@ -8,7 +8,8 @@ public class Global {
 						MESSAGE = 3,
 						CURRENT_CONFIG = 4,
 						SUCCESS = 5,
-						ERROR = 6;
+						ERROR = 6,
+						COORD = 7;
 	
 	public static final int LOGIN_ERROR = 0;
 	

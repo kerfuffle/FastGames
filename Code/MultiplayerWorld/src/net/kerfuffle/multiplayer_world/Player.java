@@ -5,6 +5,7 @@ import org.lwjgl.glfw.GLFW;
 import net.kerfuffle.Utilities.GUI.Quad;
 import net.kerfuffle.Utilities.GUI.RGB;
 import net.kerfuffle.Utilities.GUI.Text.Font;
+import net.kerfuffle.multiplayer_world.Packets.PacketCoord;
 import net.kerfuffle.multiplayer_world.Packets.PacketMove;
 
 import static net.kerfuffle.Utilities.GUI.DavisGUI.*;
@@ -31,26 +32,30 @@ public class Player extends Entity{
 	
 	private void checkMovement()
 	{
-		PacketMove pm = null;
+		PacketCoord pm = null;
 		if (keyDown(UP))
 		{
 			moveUp();
-			pm = new PacketMove(Global.UP);
+			//pm = new PacketMove(Global.UP);
+			pm = new PacketCoord(super.box.x, super.box.y);
 		}
 		if (keyDown(DOWN))
 		{
 			moveDown();
-			pm = new PacketMove(Global.DOWN);
+			//pm = new PacketMove(Global.DOWN);
+			pm = new PacketCoord(super.box.x, super.box.y);
 		}
 		if (keyDown(LEFT))
 		{
 			moveLeft();
-			pm = new PacketMove(Global.LEFT);
+			//pm = new PacketMove(Global.LEFT);
+			pm = new PacketCoord(super.box.x, super.box.y);
 		}
 		if (keyDown(RIGHT))
 		{
 			moveRight();
-			pm = new PacketMove(Global.RIGHT);
+			//pm = new PacketMove(Global.RIGHT);
+			pm = new PacketCoord(super.box.x, super.box.y);
 		}
 		
 		if (pm != null)

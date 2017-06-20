@@ -76,6 +76,18 @@ public class Game extends DavisGUI{
 			}
 		}
 	}
+	public void setPlayerPos(String username, float x, float y)
+	{
+		for (PlayerMP p : players)
+		{
+			if (p.getUsername().equals(username))
+			{
+				p.box.x = x;
+				p.box.y = y;
+				return;
+			}
+		}
+	}
 	
 	//TODO
 	public void showMessage(String str)

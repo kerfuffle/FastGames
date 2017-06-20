@@ -15,12 +15,13 @@
 <fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.MyNetworkCode"/>
 <fullyQualifiedTypeName name="java.net.InetAddress"/>
 <fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketLogin"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketError"/>
 <fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketCurrentConfig"/>
-<fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.Packet"/>
-<fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Global"/>
 <fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.User"/>
 <fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketMessage"/>
 <fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketMove"/>
+<fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Global"/>
+<fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.Packet"/>
+<fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketCoord"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>
