@@ -1,0 +1,26 @@
+package net.kerfuffle.LitterBox;
+
+import net.kerfuffle.Utilities.GUI.Quad;
+import net.kerfuffle.Utilities.GUI.RGB;
+
+public class ChatBox {
+
+	private String message;
+	private Quad box;
+	
+	public ChatBox(float x, float y, float w, float h)
+	{
+		box = new Quad(x,y,w,h, new RGB(1,1,1,0.5f));
+	}
+	
+	public void update()
+	{
+		box.draw();
+	}
+	
+	public String getMessage()
+	{
+		return message;
+	}
+	
+}

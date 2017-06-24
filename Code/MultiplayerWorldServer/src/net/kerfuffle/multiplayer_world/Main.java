@@ -46,8 +46,7 @@ public class Main {
 						float h = (float) (Math.random()*200);
 						
 						PacketLogin pl = new PacketLogin(p.getUsername(), x, y,w,h);
-						st.sendPacket(pl, packet.getIp(), packet.getPort());
-						st.sendToAllExcept(pl, packet.getIp(), packet.getPort());
+						st.sendToAll(pl);
 						
 						for (SPlayer sp : players)
 						{
@@ -55,16 +54,8 @@ public class Main {
 							st.sendPacket(oldy, packet.getIp(), packet.getPort());
 						}
 						
-						
-						
 						server.addUser(new User(p.getUsername(), packet.getIp(), packet.getPort()));
 						players.add(new SPlayer(p.getUsername(), packet.getIp(), packet.getPort(), x, y, w, h));
-						
-//						PacketCurrentConfig pcc = new PacketCurrentConfig(x,y,w,h);
-//						st.sendPacket(pcc, packet.getIp(), packet.getPort());
-						//st.sendPacket(pcc, packet.getIp(), packet.getPort());
-						
-						
 					}
 					else
 					{
@@ -91,12 +82,6 @@ public class Main {
 					PacketMove pm = new PacketMove(server.getUsername(packet.getIp(), packet.getPort()), p.getDirection());
 					
 					st.sendToAllExcept(pm, packet.getIp(), packet.getPort());
-					
-//					for (SPlayer sp : players)
-//					{
-//						System.out.println(sp.getUsername());
-//					}
-//					System.out.println();
 				}
 				if (packet.getId() == Global.DISCONNECT)
 				{

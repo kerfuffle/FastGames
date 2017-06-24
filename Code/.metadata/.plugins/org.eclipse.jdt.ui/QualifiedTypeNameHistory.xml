@@ -2,14 +2,9 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="net.kerfuffle.Utilities.GUI.Player"/>
 <fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.MyCode"/>
-<fullyQualifiedTypeName name="net.kerfuffle.Utilities.GUI.DavisGUI"/>
 <fullyQualifiedTypeName name="java.io.FileInputStream"/>
-<fullyQualifiedTypeName name="net.kerfuffle.Utilities.GUI.Quad"/>
 <fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.Client"/>
 <fullyQualifiedTypeName name="net.kerfuffle.Utilities.MyCode"/>
-<fullyQualifiedTypeName name="net.kerfuffle.Utilities.GUI.RGB"/>
-<fullyQualifiedTypeName name="org.lwjgl.glfw.GLFW"/>
-<fullyQualifiedTypeName name="net.kerfuffle.Utilities.GUI.Text.Font"/>
 <fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.Server"/>
 <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.MyNetworkCode"/>
@@ -21,7 +16,17 @@
 <fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketMessage"/>
 <fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketMove"/>
 <fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Global"/>
-<fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.Packet"/>
 <fullyQualifiedTypeName name="net.kerfuffle.multiplayer_world.Packets.PacketCoord"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="net.kerfuffle.Utilities.GUI.Quad"/>
+<fullyQualifiedTypeName name="net.kerfuffle.Utilities.GUI.RGB"/>
+<fullyQualifiedTypeName name="org.lwjgl.glfw.GLFW"/>
+<fullyQualifiedTypeName name="net.kerfuffle.Utilities.GUI.DavisGUI"/>
+<fullyQualifiedTypeName name="net.kerfuffle.Utilities.GUI.Text.Font"/>
+<fullyQualifiedTypeName name="net.kerfuffle.Utilities.Network.Packet"/>
+<fullyQualifiedTypeName name="net.kerfuffle.LitterBox.Global"/>
+<fullyQualifiedTypeName name="net.kerfuffle.LitterBox.Packets.PacketLogin"/>
+<fullyQualifiedTypeName name="net.kerfuffle.LitterBox.Packets.PacketCoord"/>
+<fullyQualifiedTypeName name="net.kerfuffle.LitterBox.Packets.PacketMessage"/>
+<fullyQualifiedTypeName name="net.kerfuffle.LitterBox.Packets.PacketError"/>
 </qualifiedTypeNameHistroy>

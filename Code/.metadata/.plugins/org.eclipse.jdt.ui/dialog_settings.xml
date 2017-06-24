@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<item value="false" key="TypeHierarchyViewPart.qualifiednames"/>
+	<item value="3" key="TypeHierarchyViewPart.orientation"/>
+	<item value="false" key="TypeHierarchyViewPart.linkeditors"/>
+	<item value="2" key="TypeHierarchyViewPart.hierarchyview"/>
 	<section name="FatJarPackageWizard">
 		<item value="C:\Users\Kerfuffle\Documents\GitHub\FastGames\Code" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
 		<item value="Main (1) - MultiplayerWorld" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
