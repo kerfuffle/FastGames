@@ -20,27 +20,22 @@ public class ChatBox {
 	public ChatBox(float x, float y, float w, float h, Font font, SendThread st)
 	{
 		box = new Quad(x,y,w,h, new RGB(1,1,1,0.5f));
-		box.lockToScreen(true);
+		box.lockToScreen();
 		this.st=st;
 		this.font=font;
 	}
 	
 	public void update()
 	{
-		if (DavisGUI.checkKey(GLFW.GLFW_KEY_T))
-		{
-			visible = true;
-		}
-		
 		if (visible)
 		{
 			streamKeys();
-			font.drawText(words.toString(), box.x, box.y);
-			box.draw();
+			//box.draw();
+			font.drawText(words.toString(), box.x+50,box.y+30);
 			
-			if (DavisGUI.checkKey(GLFW.GLFW_KEY_ESCAPE))
+			if (DavisGUI.checkKey(GLFW.GLFW_KEY_GRAVE_ACCENT))
 			{
-				words.delete(0, words.length()-1);
+				words.delete(0, words.length());
 				visible = false;
 			}
 			if (DavisGUI.checkKey(GLFW.GLFW_KEY_ENTER))
@@ -48,9 +43,14 @@ public class ChatBox {
 				PacketMessage pm = new PacketMessage(words.toString());
 				st.sendPacket(pm);
 				
-				words.delete(0, words.length()-1);
+				words.delete(0, words.length());
 				visible = false;
 			}
+		}
+		
+		if (DavisGUI.checkKey(GLFW.GLFW_KEY_T) && !visible)
+		{
+			visible = true;
 		}
 		
 	}

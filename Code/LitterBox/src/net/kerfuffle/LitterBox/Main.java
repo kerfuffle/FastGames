@@ -7,9 +7,11 @@ import java.net.UnknownHostException;
 import javax.swing.JOptionPane;
 
 import net.kerfuffle.LitterBox.Packets.PacketCoord;
+import net.kerfuffle.LitterBox.Packets.PacketDisconnect;
 import net.kerfuffle.LitterBox.Packets.PacketError;
 import net.kerfuffle.LitterBox.Packets.PacketLogin;
 import net.kerfuffle.LitterBox.Packets.PacketMessage;
+import net.kerfuffle.LitterBox.Packets.PacketNewBlock;
 import net.kerfuffle.Utilities.MyCode;
 import net.kerfuffle.Utilities.Network.Client;
 import net.kerfuffle.Utilities.Network.MyNetworkCode;
@@ -37,18 +39,8 @@ public class Main {
 		PacketLogin login = new PacketLogin(username);
 		
 		st.sendPacket(login);
-		
 
 		game = new Game(st);
-
-		game.setCloseCode(new MyCode()
-		{
-			public void run()
-			{
-				client.close();
-				st.close();
-			}
-		});
 
 		client.setMyNetworkCode(new MyNetworkCode()
 		{
@@ -92,8 +84,29 @@ public class Main {
 				}
 				if (packet.getId() == Global.DISCONNECT)
 				{
-					
+					PacketDisconnect p = new PacketDisconnect(packet.getData());
+					game.addMessage("*" + p.getUsername() + " has disconnected.");
+					game.removePlayer(p.getUsername());
 				}
+				if (packet.getId() == Global.NEW_BLOCK)
+				{
+					PacketNewBlock p = new PacketNewBlock(packet.getData());
+					game.addGameElement(p.getBlock());
+				}
+			}
+		});
+		
+		game.setCloseCode(new MyCode()
+		{
+			public void run()
+			{
+				PacketDisconnect pd = new PacketDisconnect("Free-will.");
+				st.sendPacket(pd);
+				
+				st.close();
+				client.close();
+				
+				System.exit(0);
 			}
 		});
 		

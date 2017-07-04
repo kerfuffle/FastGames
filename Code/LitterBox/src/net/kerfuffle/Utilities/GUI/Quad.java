@@ -8,7 +8,6 @@ public class Quad {
 	private RGB color;
 	private DavisImage di;
 	private Quad border;
-	private boolean lockToScreen = false;
 
 	public Quad(float x, float y, float w, float h, RGB color)
 	{
@@ -19,9 +18,9 @@ public class Quad {
 		this.color=color;
 	}
 	
-	public void lockToScreen(boolean b)
+	public void lockToScreen()
 	{
-		lockToScreen = b;
+		DavisGUI.addLockedQuad(this);
 	}
 	
 	public void setOuterBorder(int width, int height, RGB color)
@@ -53,13 +52,7 @@ public class Quad {
 	}
 	
 	public void draw()
-	{
-		if (lockToScreen && DavisGUI.justOffset())
-		{
-			x += originX;
-			y += originY;
-		}
-		
+	{	
 		if (di == null)
 		{
 			color(color);

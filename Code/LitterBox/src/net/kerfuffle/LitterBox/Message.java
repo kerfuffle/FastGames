@@ -1,10 +1,12 @@
 package net.kerfuffle.LitterBox;
 
+import net.kerfuffle.Utilities.GUI.Coord;
+import net.kerfuffle.Utilities.GUI.DavisGUI;
 import net.kerfuffle.Utilities.GUI.Text.Font;
 
 public class Message {
 
-	private float x,y;
+	private Coord c = new Coord();
 	private String message;
 	private int ticks, count = 0;
 	private Font font;
@@ -12,18 +14,20 @@ public class Message {
 	
 	public Message(String message, float x, float y, int ticks, Font font)
 	{
-		this.x=x;
-		this.y=y;
+		c.x=x;
+		c.y=y;
 		this.message = message;
 		this.ticks = ticks;
 		this.font = font;
+		
+		DavisGUI.addLockedCoord(c);
 	}
 	
 	public void draw()
 	{
 		if (count < ticks)
 		{
-			font.drawText(message, x, y);
+			font.drawText(message, c.x, c.y);
 			count++;
 		}
 		else
@@ -41,14 +45,10 @@ public class Message {
 	{
 		return message;
 	}
-	
-	public float getX()
-	{
-		return x;
-	}
+
 	public float getY()
 	{
-		return y;
+		return c.y;
 	}
 	
 }

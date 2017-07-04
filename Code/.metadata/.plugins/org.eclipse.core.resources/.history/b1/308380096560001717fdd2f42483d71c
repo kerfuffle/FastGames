@@ -1,0 +1,28 @@
+package net.kerfuffle.LitterBox.Packets;
+
+import net.kerfuffle.LitterBox.Block;
+import net.kerfuffle.LitterBox.Global;
+import net.kerfuffle.Utilities.Network.Packet;
+
+public class PacketNewBlock extends Packet{
+
+	private Block block;
+	
+	public PacketNewBlock(CharSequence data)
+	{
+		super(data, Global.NEW_BLOCK);
+		
+	}
+	
+	public PacketNewBlock(Block b)
+	{
+		super(null, Global.NEW_BLOCK);
+		data = id + "," + b.getSendData() + ",";
+	}
+	
+	
+	public Block getBlock()
+	{
+		return block;
+	}
+}

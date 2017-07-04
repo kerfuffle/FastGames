@@ -1,0 +1,8 @@
+package net.kerfuffle.LitterBox.Packets;
+
+public class Snippet {
+	public static void main(String[] args) {
+		import net.kerfuffle.LitterBox.Packets.PacketCoord;
+	}
+}
+

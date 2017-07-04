@@ -13,33 +13,38 @@ import net.kerfuffle.Utilities.Network.Client;
 
 public class Game extends DavisGUI{
 
+	private ArrayList<GameElement> gameElements = new ArrayList<GameElement>();
+	
+	
+	
 	private ArrayList<Message> messages = new ArrayList<Message>();
 	private ArrayList<PlayerMP> players = new ArrayList<PlayerMP>();
 	private SendThread st;
-	
+
 	private Font chatFont;
 	private Player player;
 	private ChatBox cb;
-	
+
 	private String username="!";
 	private float x,y,w,h;
 	private boolean playerNeedInit = false;
-	
+
+	private boolean initialized = false;
+
 	public static final int WIDTH = 1000, HEIGHT = 700;
-	
+
 	public Game(SendThread st)
 	{
 		super("LitterBox", WIDTH, HEIGHT);
 		this.st=st;
 	}
-	
-	
+
 	public void childInit()
 	{
 		try {
 			chatFont = new Font((new FileInputStream("res/Helvetica.ttf")), 24);
 		} catch (FontFormatException | IOException e) {chatFont = new Font();}
-		
+
 		if (player != null)
 		{
 			player.setFont(chatFont);
@@ -48,9 +53,9 @@ public class Game extends DavisGUI{
 		{
 			pmp.setFont(chatFont);
 		}
-		
+
 		cb = new ChatBox(-WIDTH/2, -HEIGHT/2, WIDTH, 50, chatFont, st);
-		
+
 		if (username.equals("!"))
 		{
 			playerNeedInit = true;
@@ -60,6 +65,8 @@ public class Game extends DavisGUI{
 			player = new Player(username, new Quad(x,y,w,h, new RGB(1,1,1)), chatFont, st);
 		}
 	}
+
+
 	public void childLoop()
 	{
 		if (playerNeedInit)
@@ -67,21 +74,27 @@ public class Game extends DavisGUI{
 			player = new Player(username, new Quad(x,y,w,h, new RGB(1,1,1)), chatFont, st);
 			playerNeedInit = false;
 		}
-		
+
 		if (player != null)
 		{
 			player.update();
 		}
-		
+
 		for (PlayerMP pmp : players)
 		{
 			pmp.draw();
 		}
-		
+		for (GameElement ge : gameElements)
+		{
+			ge.update();
+		}
+
 		checkMessages();
 		cb.update();
+
+		initialized = true;
 	}
-	
+
 	public void setLocalPlayer(String username, float x, float y, float w, float h)
 	{
 		this.username=username;
@@ -90,10 +103,24 @@ public class Game extends DavisGUI{
 		this.w=w;
 		this.h=h;
 	}
-	
+
 	public void addPlayer(String username, float x, float y, float w, float h)
 	{
 		players.add(new PlayerMP(username, x, y, w, h, chatFont));
+	}
+	public void removePlayer(String username)
+	{
+		PlayerMP removeMe = null;
+		for (PlayerMP p : players)
+		{
+			if (p.getUsername().equals(username))
+			{
+				removeMe = p;	//Gotta avoid that concurrent modification
+				break;
+			}
+		}
+		
+		players.remove(removeMe);
 	}
 	public void setPlayerPos(String username, float x, float y)
 	{
@@ -101,33 +128,55 @@ public class Game extends DavisGUI{
 		{
 			if (p.getUsername().equals(username))
 			{
-				p.box.x = x;
+				p.box.x = x; 
 				p.box.y = y;
 				return;
 			}
 		}
 	}
-	
+
 	public void addMessage(String str)
 	{
-		float y = (messages.size() > 0) ? messages.get(messages.size()-1).getY() - 50 : (HEIGHT/2)-50;
-		messages.add(new Message(str, -WIDTH/2 + 50, y, 750, chatFont));
+		float y = (messages.size() > 0) ? messages.get(messages.size()-1).getY() - 30 : player.getY()+(HEIGHT/2)-50;
+		messages.add(new Message(str, player.getX()-WIDTH/2 + 50, y, 600, chatFont));
 	}
-	
-	
+
+
+	private ArrayList<Message> messagesToRemove = new ArrayList<Message>();		/**For concurrent modification bull*/
 	private void checkMessages()
 	{
 		for (Message m : messages)
 		{
 			if (!m.isAlive())
 			{
-				messages.remove(m);
+				messagesToRemove.add(m);
 			}
 		}
+		
+		for (Message m : messagesToRemove)
+		{
+			messages.remove(m);
+		}
+		messagesToRemove.clear();
 		
 		for (Message m : messages)
 		{
 			m.draw();
 		}
+	}
+	
+	
+	
+	public void addGameElement(GameElement ge)
+	{
+		gameElements.add(ge);
+	}
+	public void removeGameElement(GameElement ge)
+	{
+		gameElements.remove(ge);
+	}
+	public void removeGameElement(int i)
+	{
+		gameElements.remove(i);
 	}
 }

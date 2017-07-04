@@ -1,0 +1,108 @@
+package net.kerfuffle.LitterBox;
+
+import org.lwjgl.glfw.GLFW;
+
+import net.kerfuffle.LitterBox.Packets.PacketCoord;
+import net.kerfuffle.Utilities.GUI.Coord;
+import net.kerfuffle.Utilities.GUI.DavisGUI;
+import net.kerfuffle.Utilities.GUI.Quad;
+import net.kerfuffle.Utilities.GUI.RGB;
+import net.kerfuffle.Utilities.GUI.Text.Font;
+
+
+import static net.kerfuffle.Utilities.GUI.DavisGUI.*;
+
+public class Player extends net.kerfuffle.Utilities.GUI.Player{
+	
+	private Coord startBlock, endBlock;
+	
+	private String username;
+	private static final int UP = GLFW.GLFW_KEY_W, DOWN = GLFW.GLFW_KEY_S, LEFT = GLFW.GLFW_KEY_A, RIGHT = GLFW.GLFW_KEY_D;
+	private Font font;
+	private SendThread st;
+	
+	public Player(String username, Quad quad, Font font, SendThread st)
+	{
+		super(quad, UP, DOWN, LEFT, RIGHT, true);
+		this.username = username;
+		this.font = font;
+		this.st=st;
+	}
+	
+	public void setFont(Font font)
+	{
+		this.font = font;
+	}
+	
+	private void sendMovement()
+	{
+		PacketCoord pm = null;
+		if (keyDown(UP))
+		{
+			pm = new PacketCoord(getQuad().x, getQuad().y);
+		}
+		if (keyDown(DOWN))
+		{
+			pm = new PacketCoord(getQuad().x, getQuad().y);
+		}
+		if (keyDown(LEFT))
+		{
+			pm = new PacketCoord(getQuad().x, getQuad().y);
+		}
+		if (keyDown(RIGHT))
+		{
+			pm = new PacketCoord(getQuad().x, getQuad().y);
+		}
+		
+		if (pm != null)
+		{
+			st.sendPacket(pm);
+		}
+	}
+	
+	public float getX()
+	{
+		return super.getQuad().x;
+	}
+	public float getY()
+	{
+		return super.getQuad().y;
+	}
+	
+	private void handleBlockPlacement()
+	{
+		if (DavisGUI.checkMouse(GLFW.GLFW_MOUSE_BUTTON_LEFT))
+		{
+			float m[] = DavisGUI.getMousePos();
+			startBlock = new Coord(m[0], m[1]);
+			endBlock = new Coord(m[0], m[1]); 	
+		}
+		
+		if (DavisGUI.mouseDown(GLFW.GLFW_MOUSE_BUTTON_LEFT))
+		{
+			float m[] = DavisGUI.getMousePos();
+			endBlock.x = m[0];
+			endBlock.y = m[1];
+			DavisGUI.outlineQuad(startBlock.x, startBlock.y, endBlock.x, endBlock.y);
+		}
+		if (DavisGUI.mouseUp(GLFW.GLFW_MOUSE_BUTTON_LEFT))
+		{
+			float m[] = DavisGUI.getMousePos();
+			endBlock.x = m[0];
+			endBlock.y = m[1];
+		}
+	}
+	
+	public void update()
+	{
+		handleBlockPlacement();
+		
+		sendMovement();
+		super.update();
+		font.drawText(username, getQuad().x + (getQuad().w/2), getQuad().y - 30);
+	}
+
+	
+	
+}
+

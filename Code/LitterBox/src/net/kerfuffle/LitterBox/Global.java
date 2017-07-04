@@ -6,7 +6,8 @@ public class Global {
 							COORD = 1,
 							DISCONNECT = 2,
 							ERROR = 3,
-							MESSAGE = 4;
+							MESSAGE = 4,
+							NEW_BLOCK = 5;
 	
 	public static final int LOGIN_ERROR = 0;
 	

@@ -79,14 +79,16 @@ public class Server implements Runnable{
 	}
 	public void removeUser(InetAddress ip, int port)
 	{
+		User removeMe = null;
 		for (User u : users)
 		{
 			if (u.getIp().toString().equals(ip.toString()) && u.getPort() == port)
 			{
-				users.remove(u);
-				return;
+				removeMe = u;
+				break;
 			}
 		}
+		users.remove(removeMe);
 	}
 	
 	public String getUsername(InetAddress ip, int port)

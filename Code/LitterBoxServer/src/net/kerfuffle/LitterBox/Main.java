@@ -1,14 +1,17 @@
 package net.kerfuffle.LitterBox;
 
+import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 import net.kerfuffle.LitterBox.Packets.PacketCoord;
+import net.kerfuffle.LitterBox.Packets.PacketDisconnect;
 import net.kerfuffle.LitterBox.Packets.PacketError;
 import net.kerfuffle.LitterBox.Packets.PacketLogin;
 import net.kerfuffle.LitterBox.Packets.PacketMessage;
+import net.kerfuffle.LitterBox.Packets.PacketNewBlock;
 import net.kerfuffle.Utilities.Network.MyNetworkCode;
 import net.kerfuffle.Utilities.Network.Packet;
 import net.kerfuffle.Utilities.Network.Server;
@@ -38,8 +41,8 @@ public class Main {
 					PacketLogin p = new PacketLogin(packet.getData());
 					if (validUsername(p.getUsername()))
 					{
-						float x = 0;//(float) (Math.random()*1000);
-						float y = 0;//(float) (Math.random()*700);
+						float x = 0-25;//(float) (Math.random()*1000);
+						float y = 0-25;//(float) (Math.random()*700);
 						float w = 50;//(float) (Math.random()*200);
 						float h = 50;//(float) (Math.random()*200);
 						
@@ -66,7 +69,7 @@ public class Main {
 				{
 					PacketMessage p = new PacketMessage(packet.getData());
 					PacketMessage pm = new PacketMessage(server.getUsername(packet.getIp(), packet.getPort()), p.getMessage());
-					st.sendToAllExcept(pm, packet.getIp(), packet.getPort());
+					st.sendToAll(pm);
 				}
 				if (packet.getId() == Global.COORD)
 				{
@@ -77,7 +80,20 @@ public class Main {
 				}
 				if (packet.getId() == Global.DISCONNECT)
 				{
+					PacketDisconnect p = new PacketDisconnect(packet.getData());
 					
+					System.out.println(server.getUsername(packet.getIp(), packet.getPort()) + " has disconnected because " + p.getMessage());
+					
+					PacketDisconnect pd = new PacketDisconnect(server.getUsername(packet.getIp(), packet.getPort()));
+					st.sendToAll(pd);
+					
+					server.removeUser(packet.getIp(), packet.getPort());
+					players.remove(getPlayerIndex(packet.getIp(), packet.getPort()));
+				}
+				if (packet.getId() == Global.NEW_BLOCK)
+				{
+					PacketNewBlock p = new PacketNewBlock(packet.getData());
+					st.sendToAll(p);
 				}
 			}
 		});
@@ -97,6 +113,18 @@ public class Main {
 		return true;
 	}
 
+	private int getPlayerIndex(InetAddress ip, int port)
+	{
+		for (int i = 0; i < players.size(); i++)
+		{
+			if (players.get(i).getIp().toString().equals(ip.toString()) && players.get(i).getPort() == port)
+			{
+				return i;
+			}
+		}
+		
+		return -1;
+	}
 
 	public static void main(String args[]) throws SocketException
 	{

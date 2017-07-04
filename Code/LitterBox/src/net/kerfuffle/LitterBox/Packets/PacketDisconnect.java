@@ -5,18 +5,24 @@ import net.kerfuffle.Utilities.Network.Packet;
 
 public class PacketDisconnect extends Packet{
 
-	private String message;
+	private String username;
 	
 	public PacketDisconnect(CharSequence data)
 	{
 		super(data, Global.DISCONNECT);
 		String sp[] = data.toString().split(",");
-		message = sp[1];
+		username = sp[1];
 	}
 	
-	public String getMessage()
+	public PacketDisconnect(String message)
 	{
-		return message;
+		super(null, Global.DISCONNECT);
+		data = id + "," + message + ",";
+	}
+	
+	public String getUsername()
+	{
+		return username;
 	}
 	
 }

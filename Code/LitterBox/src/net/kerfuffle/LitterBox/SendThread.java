@@ -52,6 +52,7 @@ public class SendThread implements Runnable{
 	public void close()
 	{
 		running = false;
+		client.close();
 	}
 	
 	public void sendPacket(Packet p)

@@ -1,0 +1,21 @@
+package net.kerfuffle.LitterBox;
+
+import net.kerfuffle.Utilities.GUI.Quad;
+
+public class Block implements GameElement{
+
+	public Quad box;
+	public boolean canCollide = false;
+
+	public Block(Quad box, boolean canCollide)
+	{
+		this.box=box;
+		this.canCollide = canCollide;
+	}
+	
+	public void update()
+	{
+		box.draw();
+	}
+	
+}

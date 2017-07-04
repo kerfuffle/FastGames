@@ -1,6 +1,8 @@
 package net.kerfuffle.Utilities.GUI;
 
 import static org.lwjgl.glfw.GLFW.*;
+import static net.kerfuffle.Utilities.GUI.DavisGUI.originX;
+import static net.kerfuffle.Utilities.GUI.DavisGUI.originY;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
@@ -145,7 +147,7 @@ public abstract class DavisGUI implements GLFWWindowCloseCallbackI{
 		if ( !glfwInit() )
 			throw new IllegalStateException("Unable to initialize GLFW");
 
-		
+		glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 		
 		if (!fullScreen)
 		{
@@ -535,6 +537,23 @@ public abstract class DavisGUI implements GLFWWindowCloseCallbackI{
 		return false;
 	}
 	
+	public static boolean mouseDown(int i)
+	{
+		if (glfwGetMouseButton(window, i) == GLFW.GLFW_PRESS)
+		{
+			return true;
+		}
+		return false;
+	}
+	public static boolean mouseUp(int i)
+	{
+		if (glfwGetMouseButton(window, i) == GLFW.GLFW_RELEASE)
+		{
+			return true;
+		}
+		return false;
+	}
+	
 	public static boolean mouseStates[] = new boolean[2];
 	public static boolean checkMouse(int i)
 	{
@@ -651,12 +670,15 @@ public abstract class DavisGUI implements GLFWWindowCloseCallbackI{
 		glDisable(GL_TEXTURE_2D);
 	}
 	
-	private static boolean justOffSet = false;
-	public static boolean justOffset()
+	public static ArrayList<Quad> lockedQuads = new ArrayList<Quad>();
+	public static ArrayList<Coord> lockedCoords = new ArrayList<Coord>();
+	public static void addLockedQuad(Quad q)
 	{
-		boolean temp = justOffSet;
-		justOffSet = false;
-		return temp;
+		lockedQuads.add(q);
+	}
+	public static void addLockedCoord(Coord c)
+	{
+		lockedCoords.add(c);
 	}
 	
 	public static void offsetScreen(float x, float y, float z)
@@ -664,7 +686,18 @@ public abstract class DavisGUI implements GLFWWindowCloseCallbackI{
 		originX += -x;
 		originY += -y;
 		glTranslatef(x,y,z);
-		justOffSet = true;
+		
+		for (Quad q : lockedQuads)
+		{
+			q.x += -x;
+			q.y += -y;
+		}
+		
+		for (Coord c : lockedCoords)
+		{
+			c.x += -x;
+			c.y += -y;
+		}
 	}
 	
 	public static Quad getTriangleBounds(Triangle tri)
@@ -728,6 +761,23 @@ public abstract class DavisGUI implements GLFWWindowCloseCallbackI{
 	public static void lineV(float x, float y, float length)
 	{
 		line(x,y,x,y+length);
+	}
+	
+	public static void outlineQuad(float x, float y, float x2, float y2)
+	{
+		lineH(x,y,x2-x);
+		lineH(x,y2,x2-x);
+		lineV(x,y,y2-y);
+		lineV(x2,y,y2-y);
+	}
+	
+	public static int boolToInt(boolean b)
+	{
+		return b ? 1:0;
+	}
+	public static boolean intToBool(int i)
+	{
+		return i==1;
 	}
 	
 	public static void floatBufferExample()

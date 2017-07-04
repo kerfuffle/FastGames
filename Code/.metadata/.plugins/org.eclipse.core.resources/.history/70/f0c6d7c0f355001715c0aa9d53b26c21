@@ -1,7 +1,0 @@
-package net.kerfuffle.LitterBox;
-
-public class Global {
-
-	public static final int LOGIN = 0;
-	
-}

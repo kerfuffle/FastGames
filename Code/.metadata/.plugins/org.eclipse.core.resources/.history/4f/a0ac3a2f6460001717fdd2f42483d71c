@@ -1,0 +1,10 @@
+package net.kerfuffle.LitterBox;
+
+public interface GameElement {
+
+	public void update();
+	
+	public String getSendData();
+	
+	public void applySendData();
+}

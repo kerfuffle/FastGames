@@ -3,6 +3,9 @@ package net.kerfuffle.LitterBox;
 import org.lwjgl.glfw.GLFW;
 
 import net.kerfuffle.LitterBox.Packets.PacketCoord;
+import net.kerfuffle.LitterBox.Packets.PacketNewBlock;
+import net.kerfuffle.Utilities.GUI.Coord;
+import net.kerfuffle.Utilities.GUI.DavisGUI;
 import net.kerfuffle.Utilities.GUI.Quad;
 import net.kerfuffle.Utilities.GUI.RGB;
 import net.kerfuffle.Utilities.GUI.Text.Font;
@@ -11,6 +14,8 @@ import net.kerfuffle.Utilities.GUI.Text.Font;
 import static net.kerfuffle.Utilities.GUI.DavisGUI.*;
 
 public class Player extends net.kerfuffle.Utilities.GUI.Player{
+	
+	private Coord startBlock, endBlock;
 	
 	private String username;
 	private static final int UP = GLFW.GLFW_KEY_W, DOWN = GLFW.GLFW_KEY_S, LEFT = GLFW.GLFW_KEY_A, RIGHT = GLFW.GLFW_KEY_D;
@@ -56,12 +61,52 @@ public class Player extends net.kerfuffle.Utilities.GUI.Player{
 		}
 	}
 	
+	public float getX()
+	{
+		return super.getQuad().x;
+	}
+	public float getY()
+	{
+		return super.getQuad().y;
+	}
+	
+	private boolean placingBlock = false;
+	private void handleBlockPlacement()
+	{
+		if (DavisGUI.checkMouse(GLFW.GLFW_MOUSE_BUTTON_LEFT))
+		{
+			float m[] = DavisGUI.getMousePos();
+			startBlock = new Coord(m[0], m[1]);
+			endBlock = new Coord(m[0], m[1]); 	
+		}
+		
+		if (DavisGUI.mouseDown(GLFW.GLFW_MOUSE_BUTTON_LEFT))
+		{
+			float m[] = DavisGUI.getMousePos();
+			endBlock.x = m[0];
+			endBlock.y = m[1];
+			DavisGUI.outlineQuad(startBlock.x, startBlock.y, endBlock.x, endBlock.y);
+			placingBlock = true;
+		}
+		if (DavisGUI.mouseUp(GLFW.GLFW_MOUSE_BUTTON_LEFT) && placingBlock)
+		{
+			Block block = new Block(new Quad(startBlock.x, startBlock.y, endBlock.x-startBlock.x, endBlock.y-startBlock.y, new RGB(((float)Math.random()),((float)Math.random()),((float)Math.random()))), true);
+			PacketNewBlock pnb = new PacketNewBlock(block);
+			st.sendPacket(pnb);
+			placingBlock = false;
+		}
+	}
+	
 	public void update()
 	{
+		handleBlockPlacement();
+		
 		sendMovement();
 		super.update();
 		font.drawText(username, getQuad().x + (getQuad().w/2), getQuad().y - 30);
 	}
 
+	
+	
 }
 
