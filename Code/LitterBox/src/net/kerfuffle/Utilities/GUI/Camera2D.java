@@ -53,6 +53,29 @@ public class Camera2D {
 		return y;
 	}
 	
+	
+	public void moveUp()
+	{
+		y+=speed;
+		offsetScreen(0, -speed, 0);
+	}
+	public void moveDown()
+	{
+		y-=speed;
+		offsetScreen(0, speed, 0);
+	}
+	public void moveLeft()
+	{
+		x-=speed;
+		offsetScreen(speed, 0, 0);
+	}
+	public void moveRight()
+	{
+		x+=speed;
+		offsetScreen(-speed, 0, 0);
+	}
+	
+	
 	private void checkKeys()
 	{
 		if (keyDown(up))
@@ -103,8 +126,6 @@ public class Camera2D {
 	public void update()
 	{
 		checkKeys();
-		
-		
 	}
 	
 	

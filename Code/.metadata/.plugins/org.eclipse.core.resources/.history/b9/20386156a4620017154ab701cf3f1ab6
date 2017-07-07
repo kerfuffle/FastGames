@@ -1,0 +1,164 @@
+package net.kerfuffle.LitterBox;
+
+import org.lwjgl.glfw.GLFW;
+
+import net.kerfuffle.LitterBox.Packets.PacketCoord;
+import net.kerfuffle.LitterBox.Packets.PacketNewBlock;
+import net.kerfuffle.LitterBox.Packets.PacketRemoveBlock;
+import net.kerfuffle.Utilities.GUI.Coord;
+import net.kerfuffle.Utilities.GUI.DavisGUI;
+import net.kerfuffle.Utilities.GUI.Quad;
+import net.kerfuffle.Utilities.GUI.RGB;
+import net.kerfuffle.Utilities.GUI.Text.Font;
+
+
+import static net.kerfuffle.Utilities.GUI.DavisGUI.*;
+
+public class Player extends net.kerfuffle.Utilities.GUI.Player{
+	
+	private Coord startBlock, endBlock;
+	
+	private String username;
+	private static final int UP = GLFW.GLFW_KEY_W, DOWN = GLFW.GLFW_KEY_S, LEFT = GLFW.GLFW_KEY_A, RIGHT = GLFW.GLFW_KEY_D;
+	private Font font;
+	private SendThread st;
+	private Game game;
+	
+	public Player(String username, Quad quad, Font font, SendThread st, Game game)
+	{
+		super(quad, UP, DOWN, LEFT, RIGHT, true);
+		this.username = username;
+		this.font = font;
+		this.st=st;
+		this.game=game;
+	}
+	
+	public void setFont(Font font)
+	{
+		this.font = font;
+	}
+	
+	private void sendMovement()
+	{
+		PacketCoord pm = null;
+		if (keyDown(UP))
+		{
+			pm = new PacketCoord(getQuad().x, getQuad().y);
+		}
+		if (keyDown(DOWN))
+		{
+			pm = new PacketCoord(getQuad().x, getQuad().y);
+		}
+		if (keyDown(LEFT))
+		{
+			pm = new PacketCoord(getQuad().x, getQuad().y);
+		}
+		if (keyDown(RIGHT))
+		{
+			pm = new PacketCoord(getQuad().x, getQuad().y);
+		}
+		
+		if (pm != null)
+		{
+			st.sendPacket(pm);
+		}
+	}
+	
+	public float getX()
+	{
+		return super.getQuad().x;
+	}
+	public float getY()
+	{
+		return super.getQuad().y;
+	}
+	
+	private boolean placingBlock = false;
+	private void handleBlockPlacement()
+	{
+		if (DavisGUI.checkMouse(GLFW.GLFW_MOUSE_BUTTON_LEFT))
+		{
+			float m[] = DavisGUI.getMousePos();
+			startBlock = new Coord(m[0], m[1]);
+			endBlock = new Coord(m[0], m[1]); 	
+		}
+		
+		if (DavisGUI.mouseDown(GLFW.GLFW_MOUSE_BUTTON_LEFT))
+		{
+			float m[] = DavisGUI.getMousePos();
+			endBlock.x = m[0];
+			endBlock.y = m[1];
+			DavisGUI.outlineQuad(startBlock.x, startBlock.y, endBlock.x, endBlock.y);
+			placingBlock = true;
+		}
+		if (DavisGUI.mouseUp(GLFW.GLFW_MOUSE_BUTTON_LEFT) && placingBlock)
+		{
+			Block block = new Block(new Quad(startBlock.x, startBlock.y, endBlock.x-startBlock.x, endBlock.y-startBlock.y, new RGB(((float)Math.random()),((float)Math.random()),((float)Math.random()))), false);
+			PacketNewBlock pnb = new PacketNewBlock(block);
+			st.sendPacket(pnb);
+			placingBlock = false;
+		}
+	}
+	private void handleBlockRemoval()
+	{
+		for (GameElement ge : game.gameElements)
+		{
+			if (ge.getClass() == Block.class)
+			{
+				Block b = (Block)ge;
+				if (DavisGUI.isClick(GLFW.GLFW_MOUSE_BUTTON_RIGHT, b.getBox().x, b.getBox().y, b.getBox().w, b.getBox().h))
+				{
+					PacketRemoveBlock prb = new PacketRemoveBlock(b.getId());
+					st.sendPacket(prb);
+					return;
+				}
+			}
+			
+		}
+		
+	}
+	private void handleBlockCollision()
+	{
+		for (GameElement ge : game.gameElements)
+		{
+			if (ge.getClass() == Block.class)
+			{
+				Block b = (Block)ge;
+				if (!b.canCollide())
+				{
+					if (DavisGUI.hitTop(getQuad(), b.getBox()))
+					{
+						box.y+=speed;
+					}
+					if (DavisGUI.hitBottom(getQuad(), b.getBox()))
+					{
+						box.y-=speed;
+					}
+					if (DavisGUI.hitLeft(getQuad(), b.getBox()))
+					{
+						box.x-=speed;
+					}
+					if (DavisGUI.hitRight(getQuad(), b.getBox()))
+					{
+						box.x+=speed;
+					}
+				}
+			}
+		}
+	}
+	
+	public void update()
+	{
+		handleBlockPlacement();
+		handleBlockRemoval();
+		handleBlockCollision();
+		
+		sendMovement();
+		super.update();
+		font.drawText(username, getQuad().x + (getQuad().w/2), getQuad().y - 30);
+	}
+
+	
+	
+}
+

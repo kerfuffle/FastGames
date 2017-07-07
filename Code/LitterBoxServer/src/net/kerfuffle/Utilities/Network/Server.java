@@ -61,6 +61,15 @@ public class Server implements Runnable{
 		running = false;
 	}
 	
+	public boolean hasNoUsers()
+	{
+		return (users.size()==0);
+	}
+	public boolean hasOneUser()
+	{
+		return (users.size()==1);
+	}
+	
 	public int getPort()
 	{
 		return port;

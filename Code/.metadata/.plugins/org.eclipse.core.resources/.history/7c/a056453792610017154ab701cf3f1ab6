@@ -1,0 +1,12 @@
+package net.kerfuffle.LitterBox.Packets;
+
+import net.kerfuffle.Utilities.Network.Packet;
+
+public class PacketRemoveBlock extends Packet{
+
+	public PacketRemoveBlock (CharSequence data)
+	{
+		super(data, Global)
+	}
+	
+}

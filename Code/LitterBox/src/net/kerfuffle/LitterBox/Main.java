@@ -12,6 +12,7 @@ import net.kerfuffle.LitterBox.Packets.PacketError;
 import net.kerfuffle.LitterBox.Packets.PacketLogin;
 import net.kerfuffle.LitterBox.Packets.PacketMessage;
 import net.kerfuffle.LitterBox.Packets.PacketNewBlock;
+import net.kerfuffle.LitterBox.Packets.PacketRemoveBlock;
 import net.kerfuffle.Utilities.MyCode;
 import net.kerfuffle.Utilities.Network.Client;
 import net.kerfuffle.Utilities.Network.MyNetworkCode;
@@ -92,6 +93,11 @@ public class Main {
 				{
 					PacketNewBlock p = new PacketNewBlock(packet.getData());
 					game.addGameElement(p.getBlock());
+				}
+				if (packet.getId() == Global.REMOVE_BLOCK)
+				{
+					PacketRemoveBlock p = new PacketRemoveBlock(packet.getData());
+					game.removeGameElement(p.getElementId());
 				}
 			}
 		});

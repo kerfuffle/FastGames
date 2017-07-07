@@ -1,0 +1,24 @@
+package net.kerfuffle.LitterBox.Packets;
+
+import net.kerfuffle.LitterBox.Global;
+import net.kerfuffle.Utilities.Network.Packet;
+
+public class PacketNewBlock extends Packet{
+
+	public PacketNewBlock (CharSequence data)
+	{
+		super(data, Global.NEW_BLOCK);
+	}
+	
+	public PacketNewBlock(String data1, int id)
+	{
+		super(null, Global.NEW_BLOCK);
+		
+		byte b[] = data1.getBytes();
+		String data2 = new String(b);
+		
+		
+		System.out.println(String.valueOf(data2) +  ",r3tefv54tr");
+	}
+
+}

@@ -5,4 +5,6 @@ public interface GameElement {
 	public void update();
 	
 	public String getSendData();
+	
+	public int getId();
 }

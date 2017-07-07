@@ -64,6 +64,26 @@ public class Player {
 		return box;
 	}
 	
+	public void moveUp()
+	{
+		camera.moveUp();
+		box.y += speed;
+	}
+	public void moveDown()
+	{
+		camera.moveDown();
+		box.y -= speed;
+	}
+	public void moveLeft()
+	{
+		camera.moveLeft();
+		box.x -= speed;
+	}
+	public void moveRight()
+	{
+		camera.moveRight();
+		box.x += speed;
+	}
 	
 	private void checkMovement()
 	{

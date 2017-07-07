@@ -13,9 +13,7 @@ import net.kerfuffle.Utilities.Network.Client;
 
 public class Game extends DavisGUI{
 
-	private ArrayList<GameElement> gameElements = new ArrayList<GameElement>();
-	
-	
+	protected ArrayList<GameElement> gameElements = new ArrayList<GameElement>();
 	
 	private ArrayList<Message> messages = new ArrayList<Message>();
 	private ArrayList<PlayerMP> players = new ArrayList<PlayerMP>();
@@ -62,8 +60,9 @@ public class Game extends DavisGUI{
 		}
 		else
 		{
-			player = new Player(username, new Quad(x,y,w,h, new RGB(1,1,1)), chatFont, st);
+			player = new Player(username, new Quad(x,y,w,h, new RGB(1,1,1)), chatFont, st, this);
 		}
+		initialized = true;
 	}
 
 
@@ -71,7 +70,7 @@ public class Game extends DavisGUI{
 	{
 		if (playerNeedInit)
 		{
-			player = new Player(username, new Quad(x,y,w,h, new RGB(1,1,1)), chatFont, st);
+			player = new Player(username, new Quad(x,y,w,h, new RGB(1,1,1)), chatFont, st, this);
 			playerNeedInit = false;
 		}
 
@@ -92,7 +91,19 @@ public class Game extends DavisGUI{
 		checkMessages();
 		cb.update();
 
-		initialized = true;
+		
+		
+		if (addGameElement)
+		{
+			gameElements.add(tempGameElement);
+			addGameElement = false;
+		}
+		if (removeGameElement)
+		{
+			gameElements.remove(tempGameElement);
+			removeGameElement = false;
+		}
+		
 	}
 
 	public void setLocalPlayer(String username, float x, float y, float w, float h)
@@ -166,17 +177,28 @@ public class Game extends DavisGUI{
 	}
 	
 	
-	
+	private boolean addGameElement = false;
+	private GameElement tempGameElement;
 	public void addGameElement(GameElement ge)
 	{
-		gameElements.add(ge);
+		addGameElement = true;
+		tempGameElement = ge;
 	}
-	public void removeGameElement(GameElement ge)
+	private boolean removeGameElement = false;
+	public void removeGameElement(int id)
 	{
-		gameElements.remove(ge);
-	}
-	public void removeGameElement(int i)
-	{
-		gameElements.remove(i);
+		removeGameElement = true;
+		
+		for (GameElement ge : gameElements)
+		{
+			if (ge.getId() == id)
+			{
+				tempGameElement = ge;
+				return;
+			}
+		}
+		
+		System.err.println("There is no game element with that id.");
+		removeGameElement = false;
 	}
 }

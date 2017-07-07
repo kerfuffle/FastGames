@@ -1,0 +1,22 @@
+package net.kerfuffle.LitterBox.Packets;
+
+import net.kerfuffle.LitterBox.Global;
+import net.kerfuffle.Utilities.Network.Packet;
+
+public class PacketRemoveBlock extends Packet{
+
+	private int id;
+	
+	public PacketRemoveBlock (CharSequence data)
+	{
+		super(data, Global.REMOVE_BLOCK);
+		String sp[] = data.toString().split(",");
+		id = Integer.parseInt(sp[1]);
+	}
+	
+	public int getId()
+	{
+		return id;
+	}
+	
+}

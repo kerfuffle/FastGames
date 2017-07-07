@@ -78,7 +78,7 @@ public class Packet {
 		DatagramPacket receivePacket = new DatagramPacket(buffer, buffer.length);
 		socket.receive(receivePacket);
 		
-		String data = new String(receivePacket.getData());
+		String data = new String(receivePacket.getData()).trim();
 		String sp[] = data.split(",");
 		
 		int id = Integer.parseInt(sp[0]);

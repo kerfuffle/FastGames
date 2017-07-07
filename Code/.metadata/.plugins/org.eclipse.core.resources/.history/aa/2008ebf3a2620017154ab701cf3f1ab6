@@ -1,0 +1,45 @@
+package net.kerfuffle.LitterBox;
+
+import net.kerfuffle.Utilities.GUI.DavisGUI;
+import net.kerfuffle.Utilities.GUI.Quad;
+
+public class Block implements GameElement{
+
+	private Quad box;
+	public boolean canCollide = false;
+	private int id = -1;
+
+	public Block(Quad quad, boolean canCollide)
+	{
+		this.box=quad;
+		this.canCollide = canCollide;
+	}
+	public Block(Quad quad, boolean canCollide, int id)
+	{
+		this.box=quad;
+		this.canCollide = canCollide;
+		this.id=id;
+	}
+	
+	public int getId()
+	{
+		return id;
+	}
+	
+	public void update()
+	{
+		box.draw();
+	}
+	
+	public Quad getBox()
+	{
+		return box;
+	}
+
+	public String getSendData()
+	{
+		return box.x+"/"+box.y+"/"+box.w+"/"+box.h+"/"+box.getColor().R()+"/"+box.getColor().G()+"/"+box.getColor().B()+"/"+DavisGUI.boolToInt(canCollide)+"/";
+	}
+	
+
+}

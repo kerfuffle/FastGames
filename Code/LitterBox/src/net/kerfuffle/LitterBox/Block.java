@@ -5,13 +5,47 @@ import net.kerfuffle.Utilities.GUI.Quad;
 
 public class Block implements GameElement{
 
-	public Quad box;
-	public boolean canCollide = false;
+	private Quad box;
+	private boolean canCollide = false;
+	private int id = -1;
 
 	public Block(Quad quad, boolean canCollide)
 	{
-		this.box=quad;
+		this.box=fixQuad(quad);
 		this.canCollide = canCollide;
+	}
+	public Block(Quad quad, boolean canCollide, int id)
+	{
+		this.box=fixQuad(quad);
+		this.canCollide = canCollide;
+		this.id=id;
+	}
+	
+	private Quad fixQuad(Quad q)
+	{
+		Quad ret = new Quad(q.x,q.y,q.w,q.h,q.getColor());
+		if (q.w < 0)
+		{
+			ret.x = q.x+q.w;
+			ret.w = q.w*-1;
+		}
+		if (q.h < 0)
+		{
+			ret.y = q.y+q.h;
+			ret.h = q.h*-1;
+		}
+		
+		return ret;
+	}
+	
+	public boolean canCollide()
+	{
+		return canCollide;
+	}
+	
+	public int getId()
+	{
+		return id;
 	}
 	
 	public void update()
@@ -19,6 +53,10 @@ public class Block implements GameElement{
 		box.draw();
 	}
 	
+	public Quad getBox()
+	{
+		return box;
+	}
 
 	public String getSendData()
 	{

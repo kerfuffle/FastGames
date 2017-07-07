@@ -1,0 +1,32 @@
+package net.kerfuffle.LitterBox.Packets;
+
+import net.kerfuffle.LitterBox.Global;
+import net.kerfuffle.Utilities.Network.Packet;
+
+public class PacketNewBlock extends Packet{
+
+	public PacketNewBlock (CharSequence data)
+	{
+		super(data, Global.NEW_BLOCK);
+	}
+	
+	public PacketNewBlock(String data1, int id)
+	{
+		super(null, Global.NEW_BLOCK);
+		
+		String data2 = new String(data1);
+		
+		System.out.println(data2 + id + ",");
+		//System.out.println(id);
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(data.toString());
+		sb.append(id);
+		sb.append(",");
+		//String t = data + String.valueOf(id) + "," + "fufufckckck";
+		super.data = sb.toString();
+		//super.data = data.toString() + id + ",";
+		//System.out.println(super.data);
+	}
+
+}

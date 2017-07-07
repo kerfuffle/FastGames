@@ -12,6 +12,7 @@ import net.kerfuffle.LitterBox.Packets.PacketError;
 import net.kerfuffle.LitterBox.Packets.PacketLogin;
 import net.kerfuffle.LitterBox.Packets.PacketMessage;
 import net.kerfuffle.LitterBox.Packets.PacketNewBlock;
+import net.kerfuffle.LitterBox.Packets.PacketRemoveBlock;
 import net.kerfuffle.Utilities.Network.MyNetworkCode;
 import net.kerfuffle.Utilities.Network.Packet;
 import net.kerfuffle.Utilities.Network.Server;
@@ -22,6 +23,7 @@ public class Main {
 	private SendThread st;
 	private Server server;
 	
+	private int lastGameElementId = -1;
 	private ArrayList<SPlayer> players = new ArrayList<SPlayer>();
 
 	public void run() throws SocketException
@@ -84,15 +86,22 @@ public class Main {
 					
 					System.out.println(server.getUsername(packet.getIp(), packet.getPort()) + " has disconnected because " + p.getMessage());
 					
-					PacketDisconnect pd = new PacketDisconnect(server.getUsername(packet.getIp(), packet.getPort()));
-					st.sendToAll(pd);
+					String username = server.getUsername(packet.getIp(), packet.getPort());
 					
 					server.removeUser(packet.getIp(), packet.getPort());
 					players.remove(getPlayerIndex(packet.getIp(), packet.getPort()));
+					
+					PacketDisconnect pd = new PacketDisconnect(username);
+					st.sendToAll(pd);
 				}
 				if (packet.getId() == Global.NEW_BLOCK)
 				{
-					PacketNewBlock p = new PacketNewBlock(packet.getData());
+					PacketNewBlock pnb = new PacketNewBlock(packet.getData().toString() , newGameElementId());
+					st.sendToAll(pnb);
+				}
+				if (packet.getId() == Global.REMOVE_BLOCK)
+				{
+					PacketRemoveBlock p = new PacketRemoveBlock(packet.getData());
 					st.sendToAll(p);
 				}
 			}
@@ -124,6 +133,12 @@ public class Main {
 		}
 		
 		return -1;
+	}
+	
+	private int newGameElementId()
+	{
+		lastGameElementId++;
+		return lastGameElementId;
 	}
 
 	public static void main(String args[]) throws SocketException

@@ -24,8 +24,9 @@ public class PacketNewBlock extends Packet{
 		float g = Float.parseFloat(sp[5]);
 		float b = Float.parseFloat(sp[6]);
 		boolean canCollide = DavisGUI.intToBool(Integer.parseInt(sp[7]));
+		int id = Integer.parseInt(sp0[2]);
 		
-		block = new Block(new Quad(x,y,w,h,new RGB(r,g,b)), canCollide);
+		block = new Block(new Quad(x,y,w,h,new RGB(r,g,b)), canCollide, id);
 	}
 	
 	public PacketNewBlock(Block b)
